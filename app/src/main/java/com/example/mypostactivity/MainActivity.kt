@@ -16,9 +16,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding=ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        getPosts()
+      fetchPosts()
     }
-    fun getPosts(){
+    fun fetchPosts(){
         var apiClient=ApiClient.buildApiClient(ApiInterface::class.java)
         var request=apiClient.getPost()
         request.enqueue(object :Callback<List<Post>> {
@@ -27,12 +27,12 @@ class MainActivity : AppCompatActivity() {
                     var post = response.body()
                     Toast.makeText(baseContext, "fetched ${post!!.size} posts", Toast.LENGTH_LONG)
                         .show()
-                    var adapter=PostRvAdapter(baseContext,post)
-                    Log.d("Tag",getPosts().toString())
-                    binding.rvretrofit.adapter=adapter
+                    var adapter=PostRvAdapter(post)
                     binding.rvretrofit.layoutManager=LinearLayoutManager(baseContext)
+                    binding.rvretrofit.adapter=adapter
 
                 }
+
             }
 
             override fun onFailure(call: Call<List<Post>>,t: Throwable) {

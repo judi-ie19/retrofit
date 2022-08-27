@@ -12,7 +12,7 @@ data class Comment(
     var postid:Int,
     var id:Int,
     var name: String,
-    var email:String,
+    var title: String,
     var body: String
 
 
